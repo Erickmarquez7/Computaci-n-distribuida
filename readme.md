@@ -2,5 +2,5 @@
 
 ### Prácticas
 
-1. p1
-2. p2
+0. Recorrido bfs 
+1. p2
