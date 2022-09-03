@@ -1,6 +1,6 @@
-from queue import Empty
-
-
+#Integrantes:
+#Bernal Márquez Erick           317042522
+#Deloya Andrade Ana valeria     317277582
 class Grafica:
     """Clase que representa a una gráfica. Los id's de los nodos que
     pertenezcan a estas gráficas comenzarán desde 0.
@@ -95,3 +95,8 @@ resultado_esperado = '0,1,2,3,4'
 g = Grafica(adyacencias, 'A')
 prueba_grafica(g, resultado_esperado)
 
+'''Los resultados coinciden, ambas cadenas son iguales pero por alguna extraña razón 
+imprime Resultado incorrecto :( 
+Le comenté esto a Diego por medio de telegram y me dijo que no había problema
+al entregarla de esta manera (: 
+'''
