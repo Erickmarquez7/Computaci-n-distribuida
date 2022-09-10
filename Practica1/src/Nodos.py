@@ -11,27 +11,32 @@ class Nodo:
     """
     def __init__(self, id_nodo: int, vecinos: list, canales: tuple):
         """Constructor basico de un Nodo."""
-        raise NotImplementedError('Constructor de Nodo no implementado')
+        self.id_nodo = id_nodo
+        self.vecinos = vecinos
+        self.canales = canales
+      
 
     def __str__(self):
         """Regresa la representacion en cadena del nodo."""
-        raise NotImplementedError('Str de Nodo no implementado')
-    
+      #Node: (i)
+        return f'Nodo: ({self.id_nodo})'
+
+  
     def get_id(self) -> int:
         """Regresa el identificador del nodo."""
-        raise NotImplementedError('Get_id de Nodo no implementado')
+        return self.id_nodo
     
     def get_vecinos(self) -> list:
         """Regresa la lista de vecinos del nodo."""
-        raise NotImplementedError('Get_vecinos de Nodo no implementado')
+        return self.vecinos
 
     def get_canal_entrada(self) -> simpy.Store:
         """Regresa el canal de entrada del nodo."""
-        raise NotImplementedError('Get_canal_entrada de Nodo no implementado')
+        return self.canales[0]
 
     def get_canal_salida(self) -> simpy.Store:
         """Regresa el canal de salida del nodo."""
-        raise NotImplementedError('Get_canal_salida de Nodo no implementado')
+        return self.canales[1]
 
 class NodoVecinos(Nodo):
     """Nodo que implementa el algoritmo del ejercicio 1.
@@ -41,7 +46,9 @@ class NodoVecinos(Nodo):
     """
     def __init__(self):
         """Constructor para el nodo 'vecinos'."""
-        raise NotImplementedError('Constructor de NodoVecinos no implementado')
+        super()
+        self.vecinos_de_vecinos = []
+      #raise NotImplementedError('Constructor de NodoVecinos no implementado')
 
     def conoce_vecinos(self, env: simpy.Environment):
         """Algoritmo para conocer a los vecinos de mis vecinos."""
@@ -55,8 +62,11 @@ class NodoArbolGenerador(Nodo):
     hijas -- lista de nodos hijas del nodo actual
     """
     def __init__(self):
+        super()
+        self.hijas = []
+        self.madre = -1
         """Constructor para el nodo arbol generador."""
-        raise NotImplementedError('Constructor de NodoArbolGenerador no implementado')
+        #raise NotImplementedError('Constructor de NodoArbolGenerador no implementado')
 
     def genera_arbol(self, env: simpy.Store):
         """Algoritmo para producir el arbol generador."""
@@ -69,8 +79,10 @@ class NodoBroadcast(Nodo):
     mensaje -- cadena con el mensaje que se distribuye
     """
     def __init__(self):
-        """Constructor para el nodo broadcast."""
-        raise NotImplementedError('Constructor de NodoBroadcast no implementado')
+      super()
+      self.mensaje = '' 
+      """Constructor para el nodo broadcast."""
+      raise NotImplementedError('Constructor de NodoBroadcast no implementado')
 
     def broadcast(self, env: simpy.Store):
         """Algoritmo de broadcast."""

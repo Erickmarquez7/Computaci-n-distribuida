@@ -13,7 +13,6 @@ class Canal():
 
     def envia(self, mensaje, vecinos):
         """Metodo abstracto.
-        
         Envia un mensaje a los canales de entrada de los vecinos.
         """
         pass
@@ -21,12 +20,12 @@ class Canal():
     def crea_canal_de_entrada(self) -> simpy.Store:
         """Creamos un objeto Store en el un nodo recibirá los mensajes."""
         canal = simpy.Store(self.env, capacity=self.capacidad)
-        self.canales.append(canal)
+        self.canales.append(canal)  # [{_-}][_-][][]   todo eso son los canales
         return canal
 
     def get_canales(self) -> list:
         """Regresa la lista con los canales."""
-        raise NotImplementedError('Get_canales de Canal no implementado')
+        return self.canales
 
 
 class CanalGeneral(Canal):
@@ -34,4 +33,4 @@ class CanalGeneral(Canal):
 
     def envia(self, mensaje, vecinos):
         """Envia un mensaje a los canales de entrada de los vecinos."""
-        raise NotImplementedError('Envia de CanalGeneral no implementado')
+        #raise NotImplementedError('Envia de CanalGeneral no implementado')

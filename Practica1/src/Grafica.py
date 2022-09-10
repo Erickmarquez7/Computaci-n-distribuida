@@ -2,6 +2,7 @@ from Canales import *
 from Nodos import *
 import simpy
 
+
 class Grafica:
     """Representa una grafica.
 
@@ -12,32 +13,44 @@ class Grafica:
     nodos -- lista de nodos de la grafica. Dependiendo el algoritmo que hayamos
               corrido, el tipo de nodo sera distinto.
     """
+
     def __init__(self, nombre: str, adyacencias: list):
-        raise NotImplementedError('Constructor de Grafica no implementado')
+        self.nombre = nombre
+        self.adyacencias = adyacencias
 
     def __str__(self):
-        raise NotImplementedError('Str de Grafica no implementado')
+        return f'Nombre: {self.nombre}, \nAdyacencias: {self.adyacencias}'
 
     def get_nombre(self) -> str:
-        raise NotImplementedError('Get_nombre de Grafica no implementado')
+        return self.nombre
 
     def get_adyacencias(self) -> list:
-        raise NotImplementedError('Get_adyacencias de Grafica no implementado')
+        return self.adyacencias
 
     def get_nodos(self) -> list:
-        raise NotImplementedError('Get_nodos de Grafica no implementado')
+        nodos = []
+        for i in range(len(self.adyacencias)):
+            for j in range(i):
+                nodos.append(j)
+        nodos = set(nodos)
+        nodos = list(nodos)
+        return nodos
 
-    def conoce_vecinos(self, env: simpy.Environment, canal: simpy.Store) -> None:
+        #raise NotImplementedError('Get_nodos de Grafica no implementado')
+
+    def conoce_vecinos(self, env: simpy.Environment,
+                       canal: simpy.Store) -> None:
         """Algoritmo para conocer a los vecinos de mis vecinos."""
         raise NotImplementedError('Conoce_vecinos de Grafica no implementado')
 
     def genera_arbol_generador(self, env: simpy.Environment, canal: simpy.Store) \
             -> None:
         """Algoritmo para generar el arbol generador."""
-        raise NotImplementedError('Get_arbol_generador de Grafica no implementado')
+        raise NotImplementedError(
+            'Get_arbol_generador de Grafica no implementado')
 
     def broadcast(self, env: simpy.Environment, canal: simpy.Store,
-            adyacencias_arbol: list()) -> None:
+                  adyacencias_arbol: list()) -> None:
         """Algoritmo de broadcast.
         
         Atributos:
