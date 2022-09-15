@@ -51,9 +51,9 @@ class Test_Practica1:
         nodos_res = self.g.get_nodos()
         for i in range(0, len(nodos_res)):
             nodo = nodos_res[i]
-            assert nodo.padre == padres[i],\
+            assert nodo.madre == padres[i],\
                    ('El nodo %d tiene un padre erróneo' % nodo.id_nodo)
-            assert set(nodo.hijos) == set(hijos[i]), \
+            assert set(nodo.hijas) == set(hijos[i]), \
                    ('El nodo %d no tiene a los hijos correctos' % nodo.id_nodo)
 
     def tres(self):
@@ -73,6 +73,6 @@ class Test_Practica1:
 
 
 pruebas = Test_Practica1()
-pruebas.uno() 
+#pruebas.uno() 
 #pruebas.dos()
 #pruebas.tres()

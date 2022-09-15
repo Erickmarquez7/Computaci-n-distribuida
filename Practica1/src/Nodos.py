@@ -76,11 +76,79 @@ class NodoArbolGenerador(Nodo):
     """
     def __init__(self, id_nodo: int, vecinos: list, canales: tuple):
         """Constructor para el nodo arbol generador."""
-        raise NotImplementedError('Constructor de NodoArbolGenerador no implementado')
+        Nodo.__init__(self, id_nodo, vecinos, canales)
+        self.madre = None
+        self.hijas = []
+        #raise NotImplementedError('Constructor de NodoArbolGenerador no implementado')
 
     def genera_arbol(self, env: simpy.Store):
         """Algoritmo para producir el arbol generador."""
-        raise NotImplementedError('GeneraArbol de NodoArbolGenerador no implementado')
+        #El if es para tener al nodo con id 0, es decir, el nodo raiz
+        if self.get_id() == 0:
+            self.madre = self.get_id()
+
+            #mensajes esperados
+            self.esperados = len(self.vecinos)
+
+            tipo = 'go'
+            info = (tipo, self.get_id(), 0)
+            #enviamos nuestro mensaje a los vecinos
+            self.canales[1].envia(info, self.vecinos)
+
+        else:  #los demas no tienen madre jaja xd
+            self.madre = None
+
+        #aqui es donde ocurre la magia
+        while True:
+            tipo, candidato, valor = yield self.canales[0].get()  #esperamos el mensaje
+
+            #verificamos si es go o back
+            if tipo == 'go':
+                #si no tiene madre xd
+                if self.madre is None:
+                    #hacemos del candidato la madre
+                    self.madre = candidato
+                    self.esperados = len(self.vecinos) - 1
+
+                    #si no hay mensajes esperados
+                    if self.esperados == 0:
+                        tipo = 'back'
+                        info = (tipo, self.get_id(), self.get_id())
+                        #enviamos la confirmacion al padre
+                        self.canales[1].envia(
+                            info,
+                            [candidato])  #porque tiene que verlo como lista
+
+                    #si no le seguimos envianos a nuestro vecinos
+                    else:
+                        tipo = 'go'
+                        info = (tipo, self.get_id(), None)
+                        destinos = []
+                        for i in self.vecinos:
+                            if i != candidato:
+                                destinos.append(i)
+                        self.canales[1].envia(info, destinos)
+
+                else:
+                    tipo = 'back'
+                    info = (tipo, self.get_id(), None)
+                    self.canales[1].envia(info, [candidato])
+
+            #si es de tipo back
+            elif tipo == 'back':
+                self.esperados = self.esperados - 1
+
+                #si ya no tiene mensajes esperados
+                if self.esperados == 0:
+                    if self.madre != self.get_id():
+                        tipo = 'back'
+                        info = (tipo, self.get_id(), self.get_id())
+                        self.canales[1].envia(info, [self.madre])
+
+                if valor is not None:
+                    self.hijas.append(candidato)
+
+        #raise NotImplementedError('GeneraArbol de NodoArbolGenerador no implementado')
 
 class NodoBroadcast(Nodo):
     """Nodo que implementa el algoritmo del ejercicio 3.
@@ -90,7 +158,8 @@ class NodoBroadcast(Nodo):
     """
     def __init__(self, id_nodo: int, vecinos: list, canales: tuple):
         """Constructor para el nodo broadcast."""
-        raise NotImplementedError('Constructor de NodoBroadcast no implementado')
+        Nodo.__init__(self, id_nodo, vecinos, canales)
+        #raise NotImplementedError('Constructor de NodoBroadcast no implementado')
 
     def broadcast(self, env: simpy.Store):
         """Algoritmo de broadcast."""

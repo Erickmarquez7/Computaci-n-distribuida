@@ -46,6 +46,15 @@ class Grafica:
     def genera_arbol_generador(self, env: simpy.Environment, canal: Canal) \
             -> None:    
         """Algoritmo para generar el arbol generador."""
+        for i in range(0, len(self.adyacencias)):
+            nodo = NodoArbolGenerador(i, self.adyacencias[i], (canal.crea_canal_de_entrada(), canal))
+            self.nodos.append(nodo)
+
+        for nodo in self.nodos:
+            env.process(nodo.genera_arbol(env))
+
+        yield env.timeout(0)
+
         #raise NotImplementedError('Get_arbol_generador de Grafica no implementado')
 
     def broadcast(self, env: simpy.Environment, canal: Canal,
