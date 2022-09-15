@@ -3,4 +3,4 @@
 ### Prácticas
 
 0. Recorrido bfs 
-1. p2
+1. Implementacion de los algoritmos distribuidos

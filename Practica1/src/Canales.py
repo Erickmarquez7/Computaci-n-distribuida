@@ -1,5 +1,7 @@
+#Integrantes:
+#Bernal Márquez Erick           317042522
+#Deloya Andrade Ana valeria     317277582
 import simpy
-
 
 class Canal():
     """Clase Abstracta que modela el comportamiento que cualquier canal debe 

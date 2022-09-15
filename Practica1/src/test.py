@@ -1,3 +1,6 @@
+#Integrantes:
+#Bernal Márquez Erick           317042522
+#Deloya Andrade Ana valeria     317277582
 from Canales import *
 from Grafica import *
 from Nodos import *
