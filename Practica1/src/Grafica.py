@@ -58,7 +58,6 @@ class Grafica:
 
         yield env.timeout(0)
 
-        #raise NotImplementedError('Get_arbol_generador de Grafica no implementado')
 
     def broadcast(self, env: simpy.Environment, canal: Canal,
             adyacencias_arbol: list()) -> None:
@@ -68,4 +67,11 @@ class Grafica:
         adyacencias_arbol -- Las aristas que forman el arbol sobre el que 
                               vamos a hacer el broadcast del mensaje.
         """
-        raise NotImplementedError('Broadcast de Grafica no implementado')
+        for i in range(0, len(self.adyacencias)):
+            nodo = NodoBroadcast(i, self.adyacencias[i], (canal.crea_canal_de_entrada(), canal))
+            self.nodos.append(nodo)
+
+        for nodo in self.nodos:
+            env.process(nodo.broadcast(env))
+
+        yield env.timeout(0)

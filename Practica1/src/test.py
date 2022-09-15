@@ -78,4 +78,4 @@ class Test_Practica1:
 pruebas = Test_Practica1()
 #pruebas.uno() 
 #pruebas.dos()
-#pruebas.tres()
+pruebas.tres()

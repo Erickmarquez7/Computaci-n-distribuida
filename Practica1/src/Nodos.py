@@ -162,8 +162,25 @@ class NodoBroadcast(Nodo):
     def __init__(self, id_nodo: int, vecinos: list, canales: tuple):
         """Constructor para el nodo broadcast."""
         Nodo.__init__(self, id_nodo, vecinos, canales)
-        #raise NotImplementedError('Constructor de NodoBroadcast no implementado')
+        self.mensaje = ''
+
 
     def broadcast(self, env: simpy.Store):
         """Algoritmo de broadcast."""
-        raise NotImplementedError('Broadcast de NodoBroadcast no implementado')
+        #El if es para tener al nodo con id 0, es decir, el nodo raiz
+        if self.get_id() == 0:
+            self.mensaje = 'MENSAJE BROADCAST'
+            self.canales[1].envia(self.mensaje, self.vecinos)
+
+        #los que no son la raiz, no tienen mensaje
+        else:
+            self.mensaje = None
+
+        while True:
+            self.mensaje = yield self.canales[0].get()
+
+            #el mensaje es enviado a los vecinos
+            if len(self.vecinos) > 0:
+                self.canales[1].envia(self.mensaje, self.vecinos)
+                yield env.timeout(1) #si no c cicla
+
