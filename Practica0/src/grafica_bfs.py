@@ -37,7 +37,7 @@ class Grafica:
         i = 0 
         for adyacencias_nodo in adyacencias:
             # Creamos el i-esimo nodo y lo agregamos a la lista
-            nodo_aux = self.Nodo(i, adyacencias_nodo)
+            nodo_aux = Nodo(i, adyacencias_nodo)
             self.nodos.append(nodo_aux)
             i += 1
 
