@@ -13,30 +13,42 @@ class Grafica:
               corrido, el tipo de nodo sera distinto.
     """
     def __init__(self, nombre: str, adyacencias: list):
-        raise NotImplementedError('Constructor de Grafica no implementado')
+        self.nombre = nombre
+        self.adyacencias=adyacencias
+        #pues va tener diferentes tipos de nodos de acuerdo al metodo que llamemos
+        self.nodos = []
 
     def __str__(self):
-        raise NotImplementedError('Str de Grafica no implementado')
+        return f'Grafica: {self.nombre}\nAdyacencias: {self.adyacencias}'
 
     def get_nombre(self) -> str:
-        raise NotImplementedError('Get_nombre de Grafica no implementado')
+        return self.nombre
 
     def get_adyacencias(self) -> list:
-        raise NotImplementedError('Get_adyacencias de Grafica no implementado')
+        return self.adyacencias
 
     def get_nodos(self) -> list:
-        raise NotImplementedError('Get_nodos de Grafica no implementado')
+        return self.nodos
 
-    def conoce_vecinos(self, env: simpy.Environment, canal: simpy.Store) -> None:
+    def conoce_vecinos(self, env: simpy.Environment, canal: Canal) -> None:
         """Algoritmo para conocer a los vecinos de mis vecinos."""
-        raise NotImplementedError('Conoce_vecinos de Grafica no implementado')
+        #Crea nodos
+        for i in range(0, len(self.adyacencias)):
+            #                                   objeto de tipo simpy.store
+            nodo = NodoVecinos(i, self.adyacencias[i], (canal.crea_canal_de_entrada(), canal))
+            self.nodos.append(nodo)
+        #que el ambiente procese el metodo Nodo.conoce_vecinos para cada nodo 
+        for nodo in self.nodos:
+            env.process(nodo.conoce_vecinos(env))
 
-    def genera_arbol_generador(self, env: simpy.Environment, canal: simpy.Store) \
-            -> None:
+        yield env.timeout(0)
+
+    def genera_arbol_generador(self, env: simpy.Environment, canal: Canal) \
+            -> None:    
         """Algoritmo para generar el arbol generador."""
-        raise NotImplementedError('Get_arbol_generador de Grafica no implementado')
+        #raise NotImplementedError('Get_arbol_generador de Grafica no implementado')
 
-    def broadcast(self, env: simpy.Environment, canal: simpy.Store,
+    def broadcast(self, env: simpy.Environment, canal: Canal,
             adyacencias_arbol: list()) -> None:
         """Algoritmo de broadcast.
         

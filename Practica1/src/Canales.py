@@ -5,7 +5,7 @@ class Canal():
     """Clase Abstracta que modela el comportamiento que cualquier canal debe 
     tomar."""
 
-    def __init__(self, env: simpy.Environment, capacidad):
+    def __init__(self, env: simpy.Environment, capacidad=simpy.core.Infinity):
         """Constructor de la clase."""
         self.env = env
         self.capacidad = capacidad
@@ -26,7 +26,7 @@ class Canal():
 
     def get_canales(self) -> list:
         """Regresa la lista con los canales."""
-        raise NotImplementedError('Get_canales de Canal no implementado')
+        return self.canales
 
 
 class CanalGeneral(Canal):
@@ -34,4 +34,15 @@ class CanalGeneral(Canal):
 
     def envia(self, mensaje, vecinos):
         """Envia un mensaje a los canales de entrada de los vecinos."""
-        raise NotImplementedError('Envia de CanalGeneral no implementado')
+        #revisamos si hay canales
+        if not self.canales:
+            raise RuntimeError('No hay canales.')
+        
+        #para cada id en vecinos mandamos mensaje a canales[id]; [0,1,2,3,...id_n]
+        eventos = []
+        for j in vecinos:#para cada vecinos que le queramos enviar mensaje
+            eventos.append(self.canales[j].put(mensaje))#le ponemos el mensaje en el buzon
+        return self.env.all_of(eventos)#le enviamos dichos mensajes a traves del evento
+        #es como hacer procces pero con una lista de eventos
+
+
