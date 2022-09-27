@@ -41,4 +41,4 @@ class Test_Practica2:
                     Nivel actual: {nodo.nivel}\nNivel esperado: {niveles_esperados[i]}')
 
 pruebas = Test_Practica2()
-#pruebas.uno() 
+pruebas.uno() 
