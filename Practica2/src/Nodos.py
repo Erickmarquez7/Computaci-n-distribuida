@@ -84,7 +84,7 @@ class NodoDFS(Nodo):
 
     Atributos adicionales:
     padre -- id del nodo que sera su padre en el arbol
-    nivel -- entero que representa la distancia del nodo a la raiz
+    hijos -- lista de ids de los nodos hijos del nodo
     """
 
     def __init__(self, id_nodo: int, vecinos: list, canales: tuple):
@@ -112,7 +112,6 @@ class NodoDFS(Nodo):
             if tipo == 'go':
                 self.padre = candidato
                 if self.vecinos.issubset(visitados):
-                    #self.hijos = set()
                     msj = ('back',self.id_nodo, visitados.union({self.id_nodo}))
                     self.canales[1].envia(msj, [self.padre])
 
@@ -128,11 +127,10 @@ class NodoDFS(Nodo):
                         return #terminacion global
                     else:
                         msj = ('back', self.id_nodo, visitados)
-                        self.canales[1].envia(msj, [self.padre])
+                        self.canales[1].envia(msj, [self.padre]) #terminacion local
                     
                 else:
                     k = min(self.vecinos.difference(visitados))
                     msj = ('go', self.id_nodo, visitados)
-                    #self.hijos = self.hijos.union({k})
                     self.hijos.union({k})
                     self.canales[1].envia(msj,[k])

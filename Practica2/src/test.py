@@ -7,7 +7,7 @@ import simpy
 TIEMPO_DE_EJECUCION = 50
 
 class Test_Practica2:
-    """Pruebas para la practica 2."""
+    """Pruebas para la practica 2.""" #necesitamos verlo como conjuntos para dfs
     adyacencias = [{1, 3, 4, 6}, {0, 3, 5, 7}, {3, 5, 6}, {0, 1, 2}, {0}, {1, 2}, {0, 2}, {1}]
 
     g = Grafica('A', adyacencias)
@@ -62,4 +62,4 @@ class Test_Practica2:
 
 pruebas = Test_Practica2()
 pruebas.uno() 
-pruebas.dos()
+#pruebas.dos()
