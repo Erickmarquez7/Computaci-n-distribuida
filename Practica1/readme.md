@@ -1,4 +1,4 @@
-## Práctica 0
+## Práctica 1
 
 Implementación de algoritmos distrbuidos
 

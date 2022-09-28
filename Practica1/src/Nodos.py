@@ -118,9 +118,7 @@ class NodoArbolGenerador(Nodo):
                         tipo = 'back'
                         info = (tipo, self.get_id(), self.get_id())
                         #enviamos la confirmacion al padre
-                        self.canales[1].envia(
-                            info,
-                            [candidato])  #porque tiene que verlo como lista
+                        self.canales[1].envia(info,[candidato])  #porque tiene que verlo como lista
 
                     #si no le seguimos envianos a nuestro vecinos
                     else:
