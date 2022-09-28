@@ -1,3 +1,6 @@
+## Erick Bernal Marquez             317042522
+## Ana Valeria Deloya Andrade       317277582
+
 import Canales
 import math
 import simpy
@@ -53,7 +56,7 @@ class NodoBFS(Nodo):
         #canales
         self.padre=0
         self.hijos=[]
-        self.nivel=float('inf')
+        self.nivel=math.inf
         self.msg_esperados=0
 
 

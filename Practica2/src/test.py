@@ -1,3 +1,6 @@
+## Erick Bernal Marquez             317042522
+## Ana Valeria Deloya Andrade       317277582
+
 from Canales import *
 from Grafica import *
 from Nodos import *
