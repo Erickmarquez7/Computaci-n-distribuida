@@ -51,28 +51,30 @@ class NodoBFS(Nodo):
         #id nodo
         #vecinos
         #canales
-
         self.padre=0
         self.hijos=[]
-
         self.nivel=float('inf')
         self.msg_esperados=0
 
 
     def bfs(self, env: simpy.Environment):
         """Algoritmo de BFS."""
-        """Implementación del algoritmo BFS."""
+        #si es el nodo inicial lo hacemos su propio padre
         if self.id_nodo == 0:
             self.nivel = 0
-            data = (self.nivel, self.id_nodo)
-            self.canales[1].envia(data, self.vecinos)
+            #solo hace falta enviar el id y el nivel que será el siguiente nodo
+            msj = (self.id_nodo, 1)
+            self.canales[1].envia(msj, self.vecinos)
             
+        #notemos que solo hace falta esparcir el mensje ya que cambiará de padre automaticamente
+        #sin tener que poner back
         while True:
-            # Esperamos a que nos llegue el mensaje.
-            d, sender = yield self.canales[0].get()
+            #llega el mensaje.
+            padre, n = yield self.canales[0].get()
 
-            if d + 1 < self.nivel:
-                self.nivel = d + 1
-                self.padre = sender
-                data = (self.nivel, self.id_nodo)
-                self.canales[1].envia(data, self.vecinos)
+            #si es menor toma este nuevo como su padre
+            if n < self.nivel: 
+                self.padre = padre
+                self.nivel = n
+                msj = (self.id_nodo, self.nivel+1)
+                self.canales[1].envia(msj, self.vecinos)
