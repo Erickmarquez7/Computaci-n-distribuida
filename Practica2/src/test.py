@@ -8,7 +8,7 @@ TIEMPO_DE_EJECUCION = 50
 
 class Test_Practica2:
     """Pruebas para la practica 2."""
-    adyacencias = [[1, 3, 4, 6], [0, 3, 5, 7], [3, 5, 6], [0, 1, 2], [0], [1, 2], [0, 2], [1]]
+    adyacencias = [{1, 3, 4, 6}, {0, 3, 5, 7}, {3, 5, 6}, {0, 1, 2}, {0}, {1, 2}, {0, 2}, {1}]
 
     g = Grafica('A', adyacencias)
 
@@ -40,5 +40,26 @@ class Test_Practica2:
                 (f'El nodo {nodo.id_nodo} tiene mal nivel.\n\
                     Nivel actual: {nodo.nivel}\nNivel esperado: {niveles_esperados[i]}')
 
+    def dos(self):
+        """Prueba el algoritmo 'DFS'."""
+        env, canal = self.get_ambiente_y_canal()
+
+        env.process(self.g.dfs(env, canal))
+
+        env.run(until=TIEMPO_DE_EJECUCION)
+      
+        # Comprobamos los resultados
+        padres_esperados = [0, 0, 3, 1, 0, 2, 2, 1]
+        hijos_esperados = [{1, 4}, {3, 7}, {5, 6}, {2}, set(), set(), set(), set()]
+        nodos_res = self.g.get_nodos()
+        # Para cada nodo verificamos que su lista de identifiers sea la esperada.
+        for i in range(0, len(nodos_res)):
+            nodo = nodos_res[i]
+            assert nodo.padre == padres_esperados[i],\
+                (f'El nodo {nodo.id_nodo} tiene mal padre.\n\
+                    Padre actual: {nodo.padre}\nPadre esperado: {padres_esperados[i]}')
+
+
 pruebas = Test_Practica2()
 pruebas.uno() 
+pruebas.dos()
